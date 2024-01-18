@@ -8,7 +8,7 @@ export const AppDataSource: DataSourceOptions = {
     username: "root",
     password: "12345",
     database: "typeorm",
-    entities: [User],
+    entities: [],
     logging:true,
     synchronize:true,
 }
