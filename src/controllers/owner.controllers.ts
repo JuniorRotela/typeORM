@@ -1,19 +1,20 @@
 import { Request, Response } from "express";
-import { insertData } from "../services/Insert.services";
 
+import { getData} from "../genericQueries/getBuilder";
 import { updateGardenData } from "../genericQueries/updateBuilder";
 import Garden from "../interface/garden";
 import { getOneGardenData } from "../services/getOne.services";
 import { deleteGardenData } from "../services/delete.services";
-import { getData } from "../genericQueries/getBuilder";
+import { insertOwnerData } from "../services/owner/Insert.services";
+import Owner from "../interface/owner";
 
 
-export const createGarden = async (req: Request, res: Response) => {
-  const tableName = "garden"; // Reemplaza con el nombre de tu tabla
-  const data: Garden = req.body;
+export const createOwner = async (req: Request, res: Response) => {
+  const tableName = "owner"; // Reemplaza con el nombre de tu tabla
+  const data: Owner = req.body;
   try {
     // Utiliza el servicio para insertar los datos
-    const resp = await insertData(tableName, data);
+    const resp = await insertOwnerData(tableName, data);
 
     res.json({ message: "Data inserted successfully", resp});
   } catch (error) {
@@ -25,14 +26,13 @@ export const createGarden = async (req: Request, res: Response) => {
   }
 };
 
-export const getGarden = async (req: Request, res: Response) => {
-  const tableName = "garden"; // Reemplaza con el nombre de tu tabla
-
+export const getOwner = async (req: Request, res: Response) => {
+  const tableName = "owner"; 
   try {
-    const gardenData = await getData(tableName);
-    res.json(gardenData);
+    const ownerData = await getData(tableName);
+    res.json(ownerData);
   } catch (error) {
-    console.error("Error getting garden data:", error);
+    console.error("Error getting owner data:", error);
 
     if (error instanceof Error) {
       return res.status(500).json({ message: error.message });
