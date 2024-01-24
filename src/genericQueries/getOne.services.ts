@@ -1,6 +1,6 @@
 import { getConnection } from "typeorm";
 
-export const getOneGardenData = async (tableName: string, id: number): Promise<any | null> => {
+export const getOneData = async (tableName: string, id: number): Promise<any | null> => {
   try {
     // Obtiene la conexión actual
     const connection = getConnection();
@@ -15,7 +15,7 @@ export const getOneGardenData = async (tableName: string, id: number): Promise<a
       return null; // Devuelve null si no se encuentra ningún registro
     }
   } catch (error) {
-    console.error("Error getting garden data:", error);
+    console.error("Error getting  data:", error);
     throw error;
   }
 };

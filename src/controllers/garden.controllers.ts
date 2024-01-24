@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
 import { insertData } from "../services/Insert.services";
 
-import { updateGardenData } from "../genericQueries/updateBuilder";
+
 import Garden from "../interface/garden";
-import { getOneGardenData } from "../services/getOne.services";
+import { getOneData } from "../genericQueries/getOne.services";
 import { deleteGardenData } from "../services/delete.services";
 import { getData } from "../genericQueries/getBuilder";
+import { updateData } from "../services/update.services";
 
 
 export const createGarden = async (req: Request, res: Response) => {
@@ -40,18 +41,18 @@ export const getGarden = async (req: Request, res: Response) => {
   }
 };
 
+// tu controlador
 export const updateGarden = async (req: Request, res: Response) => {
-  const tableName = "garden"; // Reemplaza con el nombre de tu tabla
-  // const newData = req.body;
+  const tableName = "garden";
   const newData: Garden = req.body;
-  const id = req.params;
+  const id = req.params.id; // Asumiendo que el id está en los parámetros de la solicitud
 
   try {
-    const resp = await updateGardenData(tableName, newData, id);
+    await updateData(tableName, id, newData);
 
-    res.json({ message: "Data updated successfully", resp });
+    res.json({ message: "Data updated successfully" });
   } catch (error) {
-    console.error("Error updating garden data:", error);
+    console.error("Error updating data:", error);
 
     if (error instanceof Error) {
       return res.status(500).json({ message: error.message });
@@ -59,12 +60,13 @@ export const updateGarden = async (req: Request, res: Response) => {
   }
 };
 
+
 export const getOneGarden = async (req: Request, res: Response) => {
   const { id } = req.params;
   const tableName = "garden"; // Reemplaza con el nombre de tu tabla
 
   try {
-    const gardenData = await getOneGardenData(tableName, parseInt(id, 10));
+    const gardenData = await getOneData(tableName, parseInt(id, 10));
 
     if (gardenData) {
       res.json(gardenData);
