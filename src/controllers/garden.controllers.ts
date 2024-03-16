@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 import { insertData } from "../services/Insert.services";
-
-
 import Garden from "../interface/garden";
 import { getOneData } from "../genericQueries/getOne.services";
 import { deleteGardenData } from "../services/delete.services";
@@ -40,6 +38,22 @@ export const getGarden = async (req: Request, res: Response) => {
     }
   }
 };
+
+export const getActivity = async (req: Request, res: Response) => {
+  const tableName = "activityView"; // Reemplaza con el nombre de tu tabla
+
+  try {
+    const gardenData = await getData(tableName);
+    res.json(gardenData);
+  } catch (error) {
+    console.error("Error getting garden data:", error);
+
+    if (error instanceof Error) {
+      return res.status(500).json({ message: error.message });
+    }
+  }
+};
+
 
 // tu controlador
 export const updateGarden = async (req: Request, res: Response) => {
